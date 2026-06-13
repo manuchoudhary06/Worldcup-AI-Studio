@@ -18,17 +18,23 @@ async function run() {
 
   console.log(`Found ${upcomingMatches.length} upcoming matches`);
 
-  for (const match of upcomingMatches) {
-    const script = await createScript({
-      home: match.teams.home.fullname,
-      away: match.teams.away.fullname,
-      venue: match.venue.name,
-    });
-    saveScript(match, script);
-    console.log(
-      `Saved script for ${match.teams.home.fullname} vs ${match.teams.away.fullname}`,
-    );
+  if (upcomingMatches.length === 0) {
+    return;
   }
+
+  const matchesPrompt = upcomingMatches
+    .map(
+      (match, index) => `
+              ${index + 1}.
+              Home: ${match.teams.home.fullname}
+              Away: ${match.teams.away.fullname}
+              Venue: ${match.venue.name}
+              `,
+    )
+    .join("\n");
+
+  const response = await createScript(matchesPrompt);
+  saveScript(response);
 
   await sendFile(getOutputFile());
   console.log("Email sent successfully");

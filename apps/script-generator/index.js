@@ -4,24 +4,28 @@ const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY,
 });
 
-async function createScript(match) {
+async function createScript(matchesPrompt) {
   const prompt = `
-    Create a 25-second YouTube Shorts script.
+    Generate YouTube Shorts scripts for the following matches.
+    Format exactly like:
 
-    Match:
-    ${match.home} vs ${match.away}
+    ==================================================
+    MATCH: Brazil vs Morocco
+    ==================================================
 
-    Venue:
-    ${match.venue}
+    script
 
-    Format:
+    ==================================================
+
+    And the script have the below format:
     1. Hook
     2. Analysis
     3. Prediction
     4. Call to Action
 
-    Keep it exciting.
-    `;
+    Matches:
+    ${matchesPrompt}
+`;
 
   const response = await ai.models.generateContent({
     model: "gemini-2.5-flash",
