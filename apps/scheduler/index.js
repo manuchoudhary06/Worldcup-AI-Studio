@@ -5,6 +5,18 @@ const { createScript } = require("../script-generator");
 const { saveScript, getOutputFile } = require("../../shared/utils/file-writer");
 const { sendFile } = require("../../shared/email/email-service");
 
+const featuredTeams = [
+  "Brazil",
+  "Argentina",
+  "France",
+  "England",
+  "Germany",
+  "Spain",
+  "Netherlands",
+  "Japan",
+  "Portugal",
+];
+
 async function run() {
   console.log(`Fetching matches.......`);
 
@@ -13,14 +25,17 @@ async function run() {
   console.log(`Found ${matches?.response?.items?.length || 0} matches`);
 
   const upcomingMatches = matches.response.items.filter(
-    (match) => match.status_str === "upcoming",
+    (match) =>
+      match.status_str === "upcoming" &&
+      (featuredTeams.includes(match.teams.home.fullname) ||
+        featuredTeams.includes(match.teams.away.fullname)),
   );
-
-  console.log(`Found ${upcomingMatches.length} upcoming matches`);
 
   if (upcomingMatches.length === 0) {
     return;
   }
+
+  console.log(`Found ${upcomingMatches.length} upcoming matches`);
 
   const matchesPrompt = upcomingMatches
     .map(
