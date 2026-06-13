@@ -5,7 +5,7 @@
 node_modules/
 
 # Generated output
-output/
+scripts/
 
 # Logs
 *.log
