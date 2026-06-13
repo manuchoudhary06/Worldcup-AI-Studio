@@ -126,28 +126,10 @@ npm install
 
 ## Running the Application
 
-Generate scripts for tomorrow's matches:
+Generate scripts for upcoming matches:
 
 ```bash
 node apps/scheduler/index.js
-```
-
-Generate scripts for a specific date:
-
-```bash
-node apps/scheduler/index.js 20260614
-```
-
-Date format:
-
-```text
-YYYYMMDD
-```
-
-Example:
-
-```bash
-node apps/scheduler/index.js 20260615
 ```
 
 ---
