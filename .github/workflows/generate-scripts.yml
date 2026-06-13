@@ -19,6 +19,9 @@ jobs:
       APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
 
     steps:
+      - name: Verify Secrets
+        run: |
+          echo "Gemini key exists: ${GEMINI_API_KEY:+YES}"
       - name: Checkout Repository
         uses: actions/checkout@v4
 
