@@ -1,0 +1,34 @@
+name: FIFA World Cup Script Generator
+
+on:
+  schedule:
+    # 05:00 AM IST daily
+    - cron: "30 23 * * *"
+
+  workflow_dispatch:
+
+jobs:
+  generate-scripts:
+    runs-on: ubuntu-latest
+
+    env:
+      FOOTBALL_API_KEY: ${{ secrets.FOOTBALL_API_KEY }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      EMAIL: ${{ secrets.EMAIL }}
+      CC_EMAIL : ${{secrets.CC_EMAIL}}
+      APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run FIFA Script Generator
+        run: node apps/scheduler/index.js
