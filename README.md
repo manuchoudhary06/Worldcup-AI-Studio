@@ -220,30 +220,6 @@ END OF SCRIPT
 
 ---
 
-## Security
-
-Never commit:
-
-```text
-.env
-```
-
-Ensure `.gitignore` contains:
-
-```gitignore
-.env
-node_modules/
-output/
-```
-
-If secrets are accidentally committed:
-
-- Revoke RapidAPI keys
-- Revoke Gemini API keys
-- Regenerate Gmail App Passwords
-
----
-
 ## License
 
 MIT License
