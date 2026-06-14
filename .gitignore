@@ -6,6 +6,6 @@ node_modules/
 
 # Generated output
 scripts/
+output/
 
-# Logs
-*.log
+generate-video.sh

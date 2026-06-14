@@ -6,47 +6,82 @@ const ai = new GoogleGenAI({
 
 async function createScript(matchesPrompt) {
   const prompt = `
-    Generate YouTube Shorts content for the following FIFA World Cup matches.
-    
+    Generate YouTube Shorts content for the following FIFA World Cup 2026 matches.
+
     Return ONLY valid JSON.
 
-    For each match generate:
-    1. match
-    2. script
-    3. scenes
+    For each match return:
+
+    {
+      "match": "",
+      "title": "",
+      "description": "",
+      "voiceover": "",
+      "thumbnailPrompt": "",
+      "scenes": []
+    }
 
     Requirements:
-    - script should be 15-20 seconds long
-    - script should contain:
-    - Hook
-    - Analysis
-    - Prediction
-    - Call To Action
 
-    - scenes should contain 4 cinematic AI video prompts suitable for Kling AI
-    - each scene should be detailed and cinematic
-    - scenes should be optimized for vertical 9:16 videos
-    - scenes should describe camera movement, lighting, atmosphere and action
+    1. title
+    - Catchy YouTube Shorts title
+    - Maximum 70 characters
 
-    Refer the below Sample Output format:
-    [
-        {
-            "match": "Brazil vs Morocco",
-            "script": {
-            "hook": "...",
-            "analysis": "...",
-            "prediction": "...",
-            "cta": "..."
-            },
-            "scenes": [
-            "Brazil football players entering MetLife Stadium, walking toward the pitch, crowd chanting, cinematic sports documentary, dramatic lighting, camera tracking shot, vertical 9:16",
-            "Morocco supporters waving flags, stadium atmosphere, slow motion, dramatic sunset lighting, cinematic sports documentary, vertical 9:16",
-            "World Cup trophy illuminated under stadium lights, cinematic close-up, shallow depth of field, dramatic sports photography, vertical 9:16",
-            "Brazil attacking near the penalty area, intense football action, dynamic camera movement, broadcast style, vertical 9:16",
-            "Prediction graphic Brazil 2-1 Morocco, crowd cheering, cinematic ending, dramatic lighting, vertical 9:16"
-            ]
-        }
-    ]
+    2. description
+    - 2-3 sentence YouTube description
+    - Include relevant hashtags
+
+    3. voiceover
+    - EXACTLY 50-60 words
+    - Never exceed 60 words
+    - Optimized for 15-18 second YouTube Shorts
+    - Natural and engaging
+    - Must contain:
+      - Hook
+      - Analysis
+      - Prediction
+      - Call To Action
+    - Should sound like a football commentator
+
+    4. thumbnailPrompt
+    - Detailed image generation prompt
+    - Sports poster style
+    - Include both teams
+    - Include FIFA World Cup atmosphere
+    - Dramatic lighting
+    - High detail
+
+    5. scenes
+    - Generate exactly 5 scenes
+    - Each scene should be 5-8 seconds
+    - Suitable for Kling AI
+    - Vertical 9:16 format
+    - Cinematic sports documentary style
+    - Include:
+      - subject
+      - action
+      - environment
+      - camera movement
+      - lighting
+
+    Scene Structure:
+
+    Scene 1:
+    Match introduction
+
+    Scene 2:
+    Home team focus
+
+    Scene 3:
+    Away team focus
+
+    Scene 4:
+    Match action
+
+    Scene 5:
+    Prediction and ending
+
+    Return ONLY JSON.
 
     Matches:
 
@@ -56,6 +91,9 @@ async function createScript(matchesPrompt) {
   const response = await ai.models.generateContent({
     model: "gemini-2.5-flash",
     contents: prompt,
+    config: {
+      responseMimeType: "application/json",
+    },
   });
 
   return response.text;
